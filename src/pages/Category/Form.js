@@ -4,16 +4,15 @@ import PageDefault from '../../components/PageDefault';
 
 // import { Container } from './styles';
 
-function VideoForm() {
+function CategoryForm() {
     return (
         <PageDefault>
-
-            <h1>Cadastro de  Vídeo</h1>
-            <Link to='/categoria/cadastro'>
-                Cadastrar Categoria
+            <h1>Cadastro de  Gategoria</h1>
+            <Link to='/'>
+                Ir para home
             </Link>
         </PageDefault>
     )
 }
 
-export default VideoForm;
+export default CategoryForm;
