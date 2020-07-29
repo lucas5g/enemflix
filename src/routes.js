@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import VideoForm from './pages/Video/Form';
 import GategoryForm from './pages/Category/Form'
-import Menu from './components/Menu'
-import Footer from './components/Footer';
+// import Menu from './components/Menu'
+// import Footer from './components/Footer';
 
 // import { Container } from './styles';
 const page404 = () => {

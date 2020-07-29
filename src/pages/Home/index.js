@@ -3,7 +3,7 @@ import dadosInicias from '../../data/dados_iniciais.json'
 import BannerMain from '../../components/BannerMain'
 import Carousel from '../../components/Carousel'
 import Menu from '../../components/Menu';
-import PageDefault from '../../components/PageDefault';
+// import PageDefault from '../../components/PageDefault';
 
 function Home() {
 	return (
@@ -16,7 +16,7 @@ function Home() {
 
 			/>
 
-			{console.log(dadosInicias.categorias)}
+			{/* {console.log(dadosInicias.categorias)} */}
 			{dadosInicias.categorias.map(categoria => (
 
 				<Carousel
