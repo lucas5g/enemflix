@@ -21,7 +21,7 @@ function CategoryForm() {
 		// const url = 'http://localhost:8000'
 		const url = window.location.hostname.includes('localhost')
 		? 'http://localhost:8000'
-		: 'https://aluraflix-lucas.herokuapp.com/categorias'
+		: 'https://aluraflix-lucas.herokuapp.com'
 
 		fetch(`${url}/categorias`)
 			.then((response) => response.json())
