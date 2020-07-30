@@ -18,13 +18,17 @@ function CategoryForm() {
 
 
 	useEffect(() => {
-		const url = 'http://localhost:8000'
+		// const url = 'http://localhost:8000'
+		const url = window.location.hostname.includes('localhost')
+		? 'http://localhost:8000'
+		: 'https://aluraflix-lucas.herokuapp.com/categorias'
+
 		fetch(`${url}/categorias`)
 			.then((response) => response.json())
 			.then((response) => {
 				
 				setCategories(response)
-				
+
 			})
 	}, [])
 
