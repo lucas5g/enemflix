@@ -12,6 +12,7 @@ function getYouTubeId(youtubeURL) {
 
 function VideoCard({ videoTitle, videoURL, categoryColor }) {
   const image = `https://img.youtube.com/vi/${getYouTubeId(videoURL)}/hqdefault.jpg`;
+  // const image = 'https://www.votorantimcimentos.com.br/wp-content/uploads/2017/08/vc-online-logo.png'
   return (
     <VideoCardContainer
       url={image}

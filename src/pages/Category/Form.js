@@ -3,16 +3,22 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../components/PageDefault';
 import FormFild from '../../components/FormFild';
 import Button from '../../components/Button';
+import useForm from '../../hooks/useForm';
 
 // import { Container } from './styles';
 
 function CategoryForm() {
 
-	const [category, setCategory] = useState({
-		name: '',
+
+	const valoresInicias = {
+		titulo: '',
 		description: '',
 		color: '#AAAAAA'
-	})
+	}
+
+	const {handleChange, values, clearForm} = useForm(valoresInicias)
+
+	const [category] = useState()
 
 	const [categories, setCategories] = useState([])
 
@@ -20,65 +26,57 @@ function CategoryForm() {
 	useEffect(() => {
 		// const url = 'http://localhost:8000'
 		const url = window.location.hostname.includes('localhost')
-		? 'http://localhost:8000'
-		: 'https://aluraflix-lucas.herokuapp.com'
+			? 'http://localhost:8000'
+			: 'https://aluraflix-lucas.herokuapp.com'
 
 		fetch(`${url}/categorias`)
 			.then((response) => response.json())
 			.then((response) => {
-				
+				console.log(response)
 				setCategories(response)
 
 			})
 	}, [])
 
-	const handleInputChange = (event) => {
-		const { name, value } = event.target
-		setCategory({
-			...category, [name]: value
-		})
-		console.log({ name, value })
-	}
-
-
 	return (
 		<PageDefault>
-			<h1>Cadastro de  Gategoria: {category.name}</h1>
+			<h1>Cadastro de  Gategoria: {category?.titulo}</h1>
 			<form onSubmit={(event) => {
 				event.preventDefault()
 				setCategories([
 					...categories,
 					category
 				])
-				setCategory({ name: '', description: '', color: '#ffffff' })
-			}}>
+
+				clearForm()
+			
+				}}>
 
 				<FormFild
 					label='Nome da Categoria'
-					name={'name'}
-					value={category.name}
-					onChange={handleInputChange}
+					name={'titulo'}
+					value={values.titulo}
+					onChange={handleChange}
 				/>
 
 				<FormFild
 					type='textarea'
 					label='Descrição'
 					name='description'
-					value={category.description}
-					onChange={handleInputChange}
+					value={values.description}
+					onChange={handleChange}
 				/>
 				<FormFild
 					type='color'
 					label='Cor'
 					name='color'
-					value={category.color}
-					onChange={handleInputChange}
+					value={values.color}
+					onChange={handleChange}
 				/>
 
 				<Button>
 					Cadastrar
-
-                </Button>
+				</Button>
 			</form>
 
 			{categories.length === 0 && (
@@ -86,12 +84,12 @@ function CategoryForm() {
 			)}
 			<ul>
 				{categories.map((category, index) => (
-					<li key={index} >{category.name}</li>
+					<li key={index} >{category.titulo}</li>
 				))}
 			</ul>
 			<Link to='/'>
 				Ir para home
-            </Link>
+			</Link>
 		</PageDefault>
 	)
 }
