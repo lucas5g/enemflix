@@ -68,7 +68,7 @@ const Input = styled.input`
       transform: scale(.6) translateY(-10px);
     }
 
-  ${({hasValue}) => hasValue &&  css`
+  ${({ hasValue }) => hasValue && css`
     &:not([type="color"]) + span {
       transform: scale(.6) translateY(-10px);
 
@@ -78,7 +78,7 @@ const Input = styled.input`
 `
 
 function FormFild({
-  label, type, name, value, onChange,
+  label, type, name, value, onChange, suggestions
 }) {
   const isTextArea = type === 'textarea'
   const tag = isTextArea ? 'textarea' : 'input'
@@ -97,10 +97,27 @@ function FormFild({
           value={value}
           hasValue={hasValue}
           onChange={onChange}
+          autoComplete={ suggestions === undefined ? 'on' : 'off'}
+          list={`suggestionFor_${name}`}
+
         />
         <Label.Text>
           {label}
+          :
         </Label.Text>
+
+        {
+          // console.log(suggestions),
+          suggestions !== undefined && (
+            <datalist id={`suggestionFor_${name}`}>
+              {suggestions.map(suggestion => (
+                <option key={suggestion.id} value={suggestion.titulo } />
+              ))}
+            </datalist>
+          )
+        }
+
+
       </Label>
     </FormFieldWrapper>
   );

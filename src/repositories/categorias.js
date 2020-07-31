@@ -13,14 +13,21 @@ const getAllWithVideos = () => {
 
       throw new Error('Não foi possível pegar os dados: (')
     })
-    // .then( (response) => {response.json()})
-    // .then( (response) => {
-    //   console.log(response)
-    //   return response
-    // })
 }
+const getAll = () => {
 
+  return fetch(URL_CATEGORIES)
+    .then(async (response) => {
+      if(response.ok){
+        const data =  response.json()
+        return data
+      }
+
+      throw new Error('Não foi possível pegar os dados: (')
+    })
+}
 
 export default {
   getAllWithVideos,
+  getAll,
 }
