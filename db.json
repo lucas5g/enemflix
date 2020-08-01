@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "title": "Music",
+      "title": "Redação",
       "description": "PlayList de Músicas",
       "color": "#ff9900",
       "id": 1
@@ -9,8 +9,8 @@
   ],
   "videos": [
     {
-      "title": "Saudade Sua ",
-      "url": "https://www.youtube.com/watch?v=wWnblC1JbJ8",
+      "title": "COMO FAZER UMA REDAÇÃO MODELO ENEM | DESCOMPLICA",
+      "url": "https://www.youtube.com/watch?v=sZu6LRb1XLQ&t=33s",
       "categoryId": 1,
       "id": 1
     }
