@@ -4,75 +4,71 @@ import PageDefault from '../../components/PageDefault';
 import FormFild from '../../components/FormFild';
 import useForm from '../../hooks/useForm';
 import Button from '../../components/Button';
-import videosRepository from '../../repositories/videos'
-import categoriasRepository from '../../repositories/categorias'
-// import { Container } from './styles';
+import api from '../../services/api';
 
 function VideoForm() {
 
   const history = useHistory()
-  const [categorias, setCategorias] = useState([])
+  const [categories, setCategories] = useState([])
 
   const { handleChange, values } = useForm({
-    titulo: 'Vídeo padrão',
-    url: 'https://www.youtube.com/watch?v=sZu6LRb1XLQ',
-    categoria: 'Front End'
+    // title: 'History in the Silent Hill',
+    // url: 'https://www.youtube.com/watch?v=_uLs9rmJZgY',
+    // category: 'Games'
   })
 
   useEffect(() => {
-    categoriasRepository
-      .getAll()
-      .then((categorias) => {
-        setCategorias(categorias)
-        console.log(categorias)
-      })
+    api.get('/categories').then((response) => {
+      const { data } = response
+      // console.log(data)
+      setCategories(data)
+    })
   }, [])
 
-  // console.log(categorias)
   return (
     <PageDefault>
 
       <h1>Cadastro de  Vídeo</h1>
       <form onSubmit={(event) => {
         event.preventDefault()
-        const categoriaEscolhida = categorias.find((categoria) => {
-          return categoria.titulo === values.categoria
+        const categorieSelect = categories.find((category) => {
+          return category.title === values.category
         })
 
-        if(categoriaEscolhida === undefined){
+        if (categorieSelect === undefined) {
           alert('Essa categoria não foi cadastrada')
-          return 
+          return
         }
 
-        const data = { titulo: values.titulo, url: values.url, categoriaId: categoriaEscolhida.id}
+        const data = { title: values.title, url: values.url, categoryId: categorieSelect.id}
+        // console.log(data)
 
-        videosRepository.create(data)
-        .then(() => {
-          console.log('Cadastrou com Sucesso!')
-          history.push('/')
-        })
-
+        // return 
+        api.post('/videos', data)
+          .then((response) => { 
+            history.push('/')
+          })
 
       }}>
         <FormFild
           label='Título do Vídeo'
-          name={'titulo'}
-          value={values.titulo || ''}
+          name='title'
+          value={values.title || '' }
           onChange={handleChange}
-        />
+          />
         <FormFild
           label='URL'
           name='url'
           value={values.url || ''}
           onChange={handleChange}
-        />
+          />
         <FormFild
           label='Categoria'
-          name="categoria"
-          value={values.categoria || ''}
+          name="category"
+          value={values.category || ''}
           onChange={handleChange}
-          suggestions={categorias}
-        />
+          suggestions={categories}
+          />
 
         <Button>
           Cadastrar
@@ -80,7 +76,7 @@ function VideoForm() {
       </form>
       <Link to='/categoria/cadastro'>
         Cadastrar Categoria
-            </Link>
+      </Link>
     </PageDefault>
   )
 }

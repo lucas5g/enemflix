@@ -9,8 +9,8 @@ function Carousel({
 }) {
   // console.log(category)
   // console.log(category.videos)
-  const categoryTitle = category.titulo;
-  const categoryColor = category.cor;
+  const categoryTitle = category.title;
+  const categoryColor = category.color;
   const categoryExtraLink = category.link_extra;
   const { videos } = category;
   return (
@@ -30,14 +30,14 @@ function Carousel({
       )}
       <Slider>
         {videos.map((video, index) => {
-          if (ignoreFirstVideo && index === 0) {
-            return null;
-          }
+          // if (ignoreFirstVideo && index === 0) {
+          //   return null;
+          // }
 
           return (
-            <SliderItem key={video.titulo}>
+            <SliderItem key={video.title}>
               <VideoCard
-                videoTitle={video.titulo}
+                videoTitle={video.title}
                 videoURL={video.url}
                 categoryColor={categoryColor}
               />

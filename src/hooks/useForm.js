@@ -5,19 +5,13 @@ const useForm = (valoresInicias) => {
 
 	const [values, setValues] = useState(valoresInicias)
 
-	const setValue = (chave, valor) => {
+	const handleChange = ( event ) => {
+		const { name, value } = event.target
 		setValues({
-			...values,
-			[chave]: valor
+				...values,
+				[name]: value
 		})
 	}
-	const handleChange = (infosDoEvento) => {
-		setValue(
-			infosDoEvento.target.name, 
-			infosDoEvento.target.value 
-		)
-	}
-
 
 	const clearForm = () => {
 		setValues(valoresInicias)

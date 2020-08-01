@@ -4,19 +4,20 @@ import PageDefault from '../../components/PageDefault';
 import FormFild from '../../components/FormFild';
 import Button from '../../components/Button';
 import useForm from '../../hooks/useForm';
+import api from '../../services/api';
 
 // import { Container } from './styles';
 
 function CategoryForm() {
 
 
-	const valoresInicias = {
-		titulo: '',
+	const valuesStart = {
+		title: '',
 		description: '',
 		color: '#AAAAAA'
 	}
 
-	const {handleChange, values, clearForm} = useForm(valoresInicias)
+	const { handleChange, values, clearForm } = useForm(valuesStart)
 
 	const [category] = useState()
 
@@ -24,38 +25,30 @@ function CategoryForm() {
 
 
 	useEffect(() => {
-		// const url = 'http://localhost:8000'
-		const url = window.location.hostname.includes('localhost')
-			? 'http://localhost:8000'
-			: 'https://aluraflix-lucas.herokuapp.com'
-
-		fetch(`${url}/categorias`)
-			.then((response) => response.json())
-			.then((response) => {
-				console.log(response)
-				setCategories(response)
-
-			})
+		api.get('/categories').then((response) => {
+			const { data } = response
+			setCategories(data)
+		})
 	}, [])
 
 	return (
 		<PageDefault>
-			<h1>Cadastro de  Gategoria: {category?.titulo}</h1>
+			<h1>Cadastro de  Gategoria: {category?.title}</h1>
 			<form onSubmit={(event) => {
 				event.preventDefault()
-				setCategories([
-					...categories,
-					category
-				])
+				api.post('/categories', values).then((response) => {
+					const { data } = response
+					setCategories([...categories, data])
+					clearForm()
+				})
 
-				clearForm()
-			
-				}}>
+
+			}}>
 
 				<FormFild
 					label='Nome da Categoria'
-					name={'titulo'}
-					value={values.titulo}
+					name={'title'}
+					value={values.title}
 					onChange={handleChange}
 				/>
 
@@ -84,7 +77,7 @@ function CategoryForm() {
 			)}
 			<ul>
 				{categories.map((category, index) => (
-					<li key={index} >{category.titulo}</li>
+					<li key={index} >{category.title}</li>
 				))}
 			</ul>
 			<Link to='/'>

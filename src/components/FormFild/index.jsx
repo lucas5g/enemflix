@@ -105,13 +105,14 @@ function FormFild({
           {label}
           :
         </Label.Text>
-
+        {/* {console.log(suggestions)} */}
         {
-          // console.log(suggestions),
           suggestions !== undefined && (
             <datalist id={`suggestionFor_${name}`}>
               {suggestions.map(suggestion => (
-                <option key={suggestion.id} value={suggestion.titulo } />
+                <option key={suggestion.id} value={suggestion.title }>
+                  {suggestion.title}
+                </option> 
               ))}
             </datalist>
           )

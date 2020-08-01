@@ -3,26 +3,25 @@ import React, { useEffect, useState } from 'react';
 import BannerMain from '../../components/BannerMain'
 import Carousel from '../../components/Carousel'
 
-import categoriasRespository from '../../repositories/categorias'
+// import categorysRespository from '../../repositories/categorys'
 import PageDefault from '../../components/PageDefault';
+import api from '../../services/api';
 // import PageDefault from '../../components/PageDefault';
 
 function Home() {
-	const [dadosIniciais, setDadosIniciais] = useState([])
+	const [data, setData] = useState([])
 
-	useEffect(() => {
-		categoriasRespository.getAllWithVideos()
-			.then(categoriasComVideos => {
-				setDadosIniciais(categoriasComVideos)
-				// console.log(categoriasComVideos)
-			})
-			.catch((err) => {
-				console.log(err.message)
-			})
 
+	 useEffect(() => {
+		 api.get('/categories?_embed=videos')
+		 	.then((response) => {
+				 const { data } = response
+				 setData(data)
+				// console.log(response)
+			 })
 	}, [])
 
-	if (dadosIniciais.length === 0) {
+	if (data.length === 0) {
 		return (
 			<div>Carregando...</div>
 		)
@@ -32,22 +31,22 @@ function Home() {
 
 		<PageDefault paddingAll={0} >
 
-			{dadosIniciais.map((categoria, index) => {
-				// console.log({ categoria })
+			{data &&  data.map((category, index) => {
+				// console.log({ category })
 				// console.log({ index })
 
 				if (index === 0) {
 
 					return (
-						<div key={categoria.id}>
+						<div key={category.id}>
 							<BannerMain
-								videoTitle={dadosIniciais[0].videos[0].titulo}
-								url={dadosIniciais[0].videos[0].url}
-								videoDescription={'O que é Front-end? Trabalhando na área os termos HTML, CSS, JS fazem para da rotina das desenvolvedoras e desenvolvedores, Mas o que eles fazem, afinal? Descubra com a Vanessa!'}
+								videoTitle={data[0].videos[0].title}
+								url={data[0].videos[0].url}
+								videoDescription={'Music'}
 							/>
 							<Carousel
 								ignoreFirstVideo
-								category={dadosIniciais[0]}
+								category={data[0]}
 							/>
 						</div>
 					)
@@ -55,8 +54,8 @@ function Home() {
 				}
 				return (
 					<Carousel
-						key={categoria.id}
-						category={categoria}
+						key={category.id}
+						category={category}
 
 					/>
 				)
